@@ -102,11 +102,9 @@ module Sidekiq
       end
 
       def process_count
-        return ENV['SK_PROCESS_COUNT'].to_i unless ENV['SK_PROCESS_COUNT'].to_i == 0
-
         case RbConfig::CONFIG['host_os']
         when /linux/
-          `grep processor /proc/cpuinfo | wc -l`.to_i
+          `getconf _NPROCESSORS_ONLN`.to_i
         when /darwin9/
           `hwprefs cpu_count`.to_i
         when /darwin/
