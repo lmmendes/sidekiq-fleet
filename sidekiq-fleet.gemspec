@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Luis Mendes"]
   spec.email         = ["lmmendes@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Start and manage multiple Sidekiq worker processes}
+  spec.description   = %q{Start and manage multiple Sidekiq worker processes}
+  spec.homepage      = "https://github.com/lmmendes/sidekiq-fleet"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
