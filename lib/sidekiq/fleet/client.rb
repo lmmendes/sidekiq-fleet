@@ -6,7 +6,7 @@ module Sidekiq
         @options      = options
         @pids         = []
         @stop_signal  = options.fetch(:stop_signal, :TERM)
-        @count        = options.fetch(:count, 1)
+        @count        = options.fetch(:count, process_count)
 
         begin
           trap @stop_signal.to_s do
@@ -67,6 +67,21 @@ module Sidekiq
           command << "--require #{@options[:require]}"          if @options[:require]
           command << "--concurrency #{@options[:concurrency]}"  if @options[:concurrency]
           command.join(' ')
+        end
+
+        def process_count
+          return ENV['SK_PROCESS_COUNT'].to_i unless ENV['SK_PROCESS_COUNT'].to_i == 0
+
+          case RbConfig::CONFIG['host_os']
+          when /linux/
+            `grep processor /proc/cpuinfo | wc -l`.to_i
+          when /darwin9/
+            `hwprefs cpu_count`.to_i
+          when /darwin/
+            ((`which hwprefs` != '') ? `hwprefs thread_count` : `sysctl -n hw.ncpu`).to_i
+          when /freebsd/
+            `sysctl -n hw.ncpu`.to_i
+          end
         end
 
     end
