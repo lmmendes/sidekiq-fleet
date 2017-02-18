@@ -55,7 +55,7 @@ module Sidekiq
             if size  == 0
               @pids.delete(pid)
               @pids << spawn_child(process_index)
-            elsif size > @max_process_size
+            elsif size >= @max_process_size
               kill(pid)
               @pids.delete(pid)
               @pids << spawn_child(process_index)
