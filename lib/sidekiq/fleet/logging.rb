@@ -1,6 +1,4 @@
-require 'time'
 require 'logger'
-require 'fcntl'
 
 module Sidekiq
   module Fleet
